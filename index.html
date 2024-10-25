@@ -146,19 +146,25 @@
             if (attendancePercentage >= 75) {
                 message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
                           You can safely bunk ${Math.floor((totalLectures * 0.75 - presentLectures) / 0.75)} more lectures!
-                          You're crushing it! 🚀`;
+                          You're crushing it! 🚀
+                          Estimated Day ${Math.ceil(((totalLectures * 0.75 - presentLectures) / 0.75)/6)}`
+                          ;
                 className = 'good-attendance';
                 emoji = '😎';
             } else if (attendancePercentage >= 65) {
                 message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
                           You need to attend ${Math.ceil((totalLectures * 0.75 - presentLectures))} more lectures to reach 75%!
-                          No more bunking for now!`;
+                          No more bunking for now!
+                          Estimated Day ${(Math.ceil((totalLectures * 0.75 - presentLectures))/6)}`;
+
                 className = 'warning-attendance';
                 emoji = '😰';
             } else {
                 message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
                           You need to attend ${Math.ceil((3*totalLectures  - 4*presentLectures))} more lectures to reach 75%!
-                          Time to become a good student!`;
+                          Time to become a good student!
+                          Estimated Day ${(Math.floor((3*totalLectures  - 4*presentLectures))/6)}`
+                          ;
                 className = 'danger-attendance';
                 emoji = '😱';
             }

@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>🎒 Bunk Master</title>
+    <title>🎒 Bunk Master Pro</title>
     <style>
         body {
             font-family: 'Comic Sans MS', cursive;
-            background: linear-gradient(135deg, #FFD700, #FF69B4);
+            background: linear-gradient(135deg, #91822b, #FF69B4);
             min-height: 100vh;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .calculator-container {
@@ -18,7 +19,7 @@
             padding: 2rem;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            max-width: 500px;
+            max-width: 600px;
             width: 90%;
         }
 
@@ -26,6 +27,12 @@
             text-align: center;
             color: #FF4081;
             margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #FF4081;
+            text-align: center;
+            margin: 20px 0;
         }
 
         .input-group {
@@ -46,6 +53,7 @@
             border-radius: 10px;
             font-size: 1em;
             transition: transform 0.2s;
+            box-sizing: border-box;
         }
 
         input:focus {
@@ -99,11 +107,58 @@
             font-size: 2em;
             margin: 10px 0;
         }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .day-card {
+            background: #E3F2FD;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #90CAF9;
+            transition: transform 0.2s;
+        }
+
+        .day-card:hover {
+            transform: scale(1.05);
+        }
+
+        .day-name {
+            font-weight: bold;
+            color: #1976D2;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .day-date {
+            font-size: 0.9em;
+            color: #2196F3;
+        }
+
+        .projected-attendance {
+            margin-top: 15px;
+            padding: 10px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            text-align: center;
+            color: #2E7D32;
+            font-weight: bold;
+        }
+
+        #projectionSection {
+            display: none;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
     <div class="calculator-container">
-        <h1>🎒 Bunk Master</h1>
+        <h1>🎒 Bunk Master Pro</h1>
         <div class="input-group">
             <label>✨ Your Name:</label>
             <input type="text" id="name" placeholder="Enter your name">
@@ -118,14 +173,51 @@
         </div>
         <button onclick="calculateAttendance()">Calculate My Destiny! 🎲</button>
         <div id="result"></div>
+
+        <div id="projectionSection">
+            <h3>📅 Projected Attendance for Next Classes</h3>
+            <div class="days-grid" id="nextDays"></div>
+        </div>
     </div>
 
     <script>
+        function updateProjectionCalendar(totalLectures, presentLectures) {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const nextDaysDiv = document.getElementById('nextDays');
+            const today = new Date();
+            let currentDate = new Date(today);
+            let daysAdded = 0;
+            nextDaysDiv.innerHTML = '';
+
+            while (daysAdded < 6) {
+                currentDate.setDate(currentDate.getDate() + 1);
+                if (currentDate.getDay() !== 0) { 
+                    const projectedAttendance = ((presentLectures + (daysAdded + 1) *6)/ (totalLectures + (daysAdded + 1) *6) * 100);
+                    
+                    const dayCard = document.createElement('div');
+                    dayCard.className = 'day-card';
+                    dayCard.innerHTML = `
+                        <div class="day-name">${days[currentDate.getDay()]}</div>
+                        <div class="day-date">${currentDate.toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            day: 'numeric' 
+                        })}</div>
+                        <div class="projected-attendance">
+                           
+                            ${projectedAttendance.toFixed(2)}%
+                        </div>
+                    `;
+                    nextDaysDiv.appendChild(dayCard);
+                    daysAdded++;
+                }
+            }
+            document.getElementById('projectionSection').style.display = 'block';
+        }
+
         function calculateAttendance() {
             const name = document.getElementById('name').value;
             const totalLectures = parseInt(document.getElementById('totalLectures').value);
             const presentLectures = parseInt(document.getElementById('presentLectures').value);
-            const totalAttendace = parseInt(document.getElementById('presentLectures').value);
 
             if (!name || !totalLectures || !presentLectures) {
                 alert("Please fill all fields! 🙏");
@@ -136,8 +228,10 @@
                 alert("You can't attend more lectures than total lectures! 🤔");
                 return;
             }
-            
+
             const attendancePercentage = (presentLectures / totalLectures) * 100;
+            const projectedAttendance = ((presentLectures + 6) / (totalLectures + 6) * 100);
+            
             const resultDiv = document.getElementById('result');
             let message = '';
             let className = '';
@@ -145,29 +239,25 @@
 
             if (attendancePercentage >= 75) {
                 message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You can safely bunk ${Math.floor((totalLectures * 0.75 - presentLectures) / 0.75)} more lectures!
-                          You're crushing it! 🚀
-                          Estimated Day ${Math.ceil(((totalLectures * 0.75 - presentLectures) / 0.75)/6)}`
-                          ;
+                          You can safely bunk ${Math.floor((totalLectures * 0.75 - presentLectures) / 0.75)} more lectures!\n
+                          You're crushing it! 🚀`;
                 className = 'good-attendance';
                 emoji = '😎';
             } else if (attendancePercentage >= 65) {
                 message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil((totalLectures * 0.75 - presentLectures))} more lectures to reach 75%!
-                          No more bunking for now!
-                          Estimated Day ${(Math.ceil((totalLectures * 0.75 - presentLectures))/6)}`;
-
+                          You need to attend ${Math.ceil((totalLectures * 0.75 - presentLectures))} more lectures to reach 75%!\n
+                          No more bunking for now!`;
                 className = 'warning-attendance';
                 emoji = '😰';
             } else {
                 message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil((3*totalLectures  - 4*presentLectures))} more lectures to reach 75%!
-                          Time to become a good student!
-                          Estimated Day ${(Math.floor((3*totalLectures  - 4*presentLectures))/6)}`
-                          ;
+                          You need to attend ${Math.ceil((totalLectures * 0.75 - presentLectures))} more lectures to reach 75%!\n
+                          Time to become a good student!`;
                 className = 'danger-attendance';
                 emoji = '😱';
             }
+
+            message += `\n\nIf you attend all next 6 classes:\nFinal projected attendance will be ${projectedAttendance.toFixed(2)}%`;
 
             resultDiv.innerHTML = `
                 <div class="emoji">${emoji}</div>
@@ -175,6 +265,9 @@
             `;
             resultDiv.className = className;
             resultDiv.style.display = 'block';
+
+            // Update projection calendar with current attendance data
+            updateProjectionCalendar(totalLectures, presentLectures);
         }
     </script>
 </body>

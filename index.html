@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🎒 Bunk Master</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #FFD700, #FF69B4);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calculator-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #FF4081;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 3px solid #FFD700;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: transform 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            transform: scale(1.02);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #FF4081;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: #FF1744;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.1em;
+            display: none;
+        }
+
+        .good-attendance {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .warning-attendance {
+            background: #FFF3E0;
+            color: #EF6C00;
+        }
+
+        .danger-attendance {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+
+        .emoji {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>🎒 Bunk Master</h1>
+        <div class="input-group">
+            <label>✨ Your Name:</label>
+            <input type="text" id="name" placeholder="Enter your name">
+        </div>
+        <div class="input-group">
+            <label>📚 Total Lectures:</label>
+            <input type="number" id="totalLectures" placeholder="Total number of lectures">
+        </div>
+        <div class="input-group">
+            <label>✅ Lectures Attended:</label>
+            <input type="number" id="presentLectures" placeholder="Lectures you attended">
+        </div>
+        <button onclick="calculateAttendance()">Calculate My Destiny! 🎲</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateAttendance() {
+            const name = document.getElementById('name').value;
+            const totalLectures = parseInt(document.getElementById('totalLectures').value);
+            const presentLectures = parseInt(document.getElementById('presentLectures').value);
+            const totalAttendace = parseInt(document.getElementById('presentLectures').value);
+
+            if (!name || !totalLectures || !presentLectures) {
+                alert("Please fill all fields! 🙏");
+                return;
+            }
+
+            if (presentLectures > totalLectures) {
+                alert("You can't attend more lectures than total lectures! 🤔");
+                return;
+            }
+            
+            const attendancePercentage = (presentLectures / totalLectures) * 100;
+            const resultDiv = document.getElementById('result');
+            let message = '';
+            let className = '';
+            let emoji = '';
+
+            if (attendancePercentage >= 75) {
+                message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                          You can safely bunk ${Math.floor((totalLectures * 0.75 - presentLectures) / 0.75)} more lectures!
+                          You're crushing it! 🚀`;
+                className = 'good-attendance';
+                emoji = '😎';
+            } else if (attendancePercentage >= 65) {
+                message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                          You need to attend ${Math.ceil((totalLectures * 0.75 - presentLectures))} more lectures to reach 75%!
+                          No more bunking for now!`;
+                className = 'warning-attendance';
+                emoji = '😰';
+            } else {
+                message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                          You need to attend ${Math.ceil((3*totalLectures  - 4*presentLectures))} more lectures to reach 75%!
+                          Time to become a good student!`;
+                className = 'danger-attendance';
+                emoji = '😱';
+            }
+
+            resultDiv.innerHTML = `
+                <div class="emoji">${emoji}</div>
+                ${message.split('\n').join('<br>')}
+            `;
+            resultDiv.className = className;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

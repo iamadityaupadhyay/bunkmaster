@@ -2,188 +2,188 @@
 <html>
 <head>
     <title>🎒 Bunk Master Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-    font-family: 'Comic Sans MS';
-    background: linear-gradient(135deg, #91822b, #FF69B4);
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    /* box-sizing: border-box; */
-}
+            font-family: 'Comic Sans MS';
+            background: linear-gradient(135deg, #91822b, #FF69B4);
+            min-height: 100vh;
+            width: 100%;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.calculator-container {
-    background: white;
-    padding: 2rem;
-    font-size: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    width: 80%;
-    max-width: 90%;
-    display: flex;
-    flex-direction: column;
-    /* padding-top: 10px;
-    padding-bottom: 10px; */
-    gap: 15px;
-    overflow-y: auto;
-    
-}
+        .calculator-container {
+            background: white;
+            padding: 2rem;
+            font-size: clamp(16px, 4vw, 25px);
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            width: min(90%, 800px);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-@media screen and (max-width: 768px) {
-    body {
-        padding: 10px;
-        align-items: flex-start;
-    }
+        h1 {
+            text-align: center;
+            color: #FF4081;
+            margin-bottom: 20px;
+            font-size: clamp(24px, 5vw, 36px);
+        }
 
-    .calculator-container {
-        width: 100%;
-        margin: 0;
-        
-        border-radius: 15px;
-        padding: 1.5rem;
-    }
+        h3 {
+            color: #FF4081;
+            text-align: center;
+            margin: 15px 0;
+            font-size: clamp(20px, 4vw, 28px);
+        }
 
-    .days-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+        .input-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
 
-h1 {
-    text-align: center;
-    color: #FF4081;
-    margin-bottom: 30px;
-}
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: clamp(14px, 3vw, 20px);
+        }
 
-h3 {
-    color: #FF4081;
-    text-align: center;
-    margin: 20px 0;
-}
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 3px solid #FFD700;
+            border-radius: 10px;
+            font-size: clamp(14px, 3vw, 18px);
+            transition: transform 0.2s;
+        }
 
-.input-group {
-    margin-bottom: 20px;
-}
+        input:focus {
+            outline: none;
+            transform: scale(1.02);
+        }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-    font-size: 1.1em;
-}
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #FF4081;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: clamp(16px, 3.5vw, 22px);
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: 'Comic Sans MS', cursive;
+        }
 
-input {
-    width: 100%;
-    padding: 10px;
-    border: 3px solid #FFD700;
-    border-radius: 10px;
-    font-size: 1em;
-    transition: transform 0.2s;
-    box-sizing: border-box;
-}
+        button:hover {
+            transform: scale(1.02);
+            background: #FF1744;
+        }
 
-input:focus {
-    outline: none;
-    transform: scale(1.02);
-}
+        #result {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: clamp(14px, 3vw, 18px);
+            display: none;
+            word-wrap: break-word;
+        }
 
-button {
-    width: 100%;
-    padding: 12px;
-    background: #FF4081;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: transform 0.2s;
-    font-family: 'Comic Sans MS', cursive;
-}
+        .good-attendance { background: #E8F5E9; color: #2E7D32; }
+        .warning-attendance { background: #FFF3E0; color: #EF6C00; }
+        .danger-attendance { background: #FFEBEE; color: #C62828; }
 
-button:hover {
-    transform: scale(1.05);
-    background: #FF1744;
-}
+        .emoji {
+            font-size: clamp(24px, 6vw, 48px);
+            margin: 10px 0;
+        }
 
-#result {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 1.1em;
-    display: none;
-}
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
 
-.good-attendance {
-    background: #E8F5E9;
-    color: #2E7D32;
-}
+        .day-card {
+            background: #E3F2FD;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #90CAF9;
+            transition: transform 0.2s;
+        }
 
-.warning-attendance {
-    background: #FFF3E0;
-    color: #EF6C00;
-}
+        .day-card:hover {
+            transform: scale(1.02);
+        }
 
-.danger-attendance {
-    background: #FFEBEE;
-    color: #C62828;
-}
+        .day-name {
+            font-weight: bold;
+            color: #1976D2;
+            font-size: clamp(12px, 2.5vw, 16px);
+            margin-bottom: 5px;
+        }
 
-.emoji {
-    font-size: 2em;
-    margin: 10px 0;
-}
+        .day-date {
+            font-size: clamp(12px, 2.5vw, 16px);
+            color: #2196F3;
+        }
 
-.days-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-}
+        .projected-attendance {
+            margin-top: 10px;
+            padding: 8px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            text-align: center;
+            color: #2E7D32;
+            font-weight: bold;
+            font-size: clamp(12px, 2.5vw, 16px);
+        }
+        .projected-attendance-absent {
+            margin-top: 10px;
+            padding: 8px;
+            background: #E8F5E9;
+            border-radius: 8px;
+            text-align: center;
+            color: #e00d1f;
+            font-weight: bold;
+            font-size: clamp(12px, 2.5vw, 16px);
+        }
 
-.day-card {
-    background: #E3F2FD;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    border: 2px solid #90CAF9;
-    transition: transform 0.2s;
-}
+        #projectionSection {
+            display: none;
+            margin: 20px 0;
+        }
 
-.day-card:hover {
-    transform: scale(1.05);
-}
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
 
-.day-name {
-    font-weight: bold;
-    color: #1976D2;
-    font-size: 0.7em;
-    margin-bottom: 5px;
-}
+            .calculator-container {
+                padding: 1.5rem;
+                width: 100%;
+            }
 
-.day-date {
-    font-size: 0.9em;
-    color: #2196F3;
-}
-
-.projected-attendance {
-    margin-top: 15px;
-    padding: 10px;
-    background: #E8F5E9;
-    border-radius: 8px;
-    text-align: center;
-    color: #2E7D32;
-    font-weight: bold;
-}
-
-#projectionSection {
-    display: none;
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
+            .days-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
@@ -200,6 +200,14 @@ button:hover {
         <div class="input-group">
             <label>✅ Lectures Attended:</label>
             <input type="number" id="presentLectures" placeholder="Lectures you attended">
+        </div>
+        <div class="input-group">
+            <label>✅ Target Attendence(default=75)</label>
+            <input type="number" value="75"id="required" placeholder="Target(Default=75) ">
+        </div>
+        <div class="input-group">
+            <label>Lectures per day(default=6)</label>
+            <input type="number" value="6" id="classes" placeholder="Lectures per day">
         </div>
         <button onclick="calculateAttendance()">Calculate My Destiny! 🎲</button>
         <div id="result"></div>
@@ -218,11 +226,13 @@ button:hover {
             let currentDate = new Date(today);
             let daysAdded = 0;
             nextDaysDiv.innerHTML = '';
+            const classes = parseInt(document.getElementById('classes').value);
 
             while (daysAdded < 6) {
                 currentDate.setDate(currentDate.getDate() + 1);
                 if (currentDate.getDay() !== 0) { 
-                    const projectedAttendance = ((presentLectures + (daysAdded + 1) *6)/ (totalLectures + (daysAdded + 1) *6) * 100);
+                    const projectedAttendance = ((presentLectures + (daysAdded + 1)*classes) / (totalLectures + (daysAdded + 1)*classes) * 100);
+                    const projectedAttendanceAbsent = ((presentLectures) / (totalLectures + (daysAdded + 1)*classes) * 100);
                     
                     const dayCard = document.createElement('div');
                     dayCard.className = 'day-card';
@@ -233,8 +243,10 @@ button:hover {
                             day: 'numeric' 
                         })}</div>
                         <div class="projected-attendance">
-                           
-                            ${projectedAttendance.toFixed(2)}%
+                            Present:${projectedAttendance.toFixed(2)}%
+                        </div>
+                        <div class="projected-attendance-absent">
+                            Absent:${projectedAttendanceAbsent.toFixed(2)}%
                         </div>
                     `;
                     nextDaysDiv.appendChild(dayCard);
@@ -248,44 +260,65 @@ button:hover {
             const name = document.getElementById('name').value;
             const totalLectures = parseInt(document.getElementById('totalLectures').value);
             const presentLectures = parseInt(document.getElementById('presentLectures').value);
-
+            const required = parseInt(document.getElementById('required').value);
+            classes = parseInt(document.getElementById('classes').value);
+            
             if (!name || !totalLectures || !presentLectures) {
                 alert("Please fill all fields! 🙏");
                 return;
             }
-
+            
             if (presentLectures > totalLectures) {
                 alert("You can't attend more lectures than total lectures! 🤔");
                 return;
             }
 
             const attendancePercentage = (presentLectures / totalLectures) * 100;
-            const projectedAttendance = ((presentLectures + 6) / (totalLectures + 6) * 100);
-            
+            const projectedAttendance = ((presentLectures + classes) / (totalLectures + classes) * 100);
             const resultDiv = document.getElementById('result');
             let message = '';
             let className = '';
             let emoji = '';
 
             if (attendancePercentage >= 75) {
+                if (!required){
+                    message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                          You can safely bunk ${Math.ceil((-totalLectures*(75/100)+presentLectures )/(75/100))} more lectures!\n
+                          You're crushing it! 🚀`;
+                className = 'good-attendance';
+                emoji = '😎'; 
+                }
+                else{
                 message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You can safely bunk ${Math.floor((totalLectures * 0.75 - presentLectures) / 0.75)} more lectures!\n
-                          You're crushing it! 🚀
-
-                           
-                          `;
+                          You can safely bunk ${Math.ceil((-totalLectures*(required/100)+presentLectures )/(required/100))} more lectures!\n
+                          You're crushing it! 🚀`;
                 className = 'good-attendance';
                 emoji = '😎';
+                }
             } else if (attendancePercentage >= 65) {
-                message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil((3*totalLectures  - 4*presentLectures))} more lectures to reach 75%!\n
+                if (!required){
+                    message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                          You need to attend ${Math.ceil((totalLectures*(required/100)-presentLectures )/(required/100))}more lectures to reach 75%!\n
                           No more bunking for now!`;
                 className = 'warning-attendance';
                 emoji = '😰';
+                }
+                else{
+                message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                          You need to attend ${Math.ceil(3*totalLectures-4*presentLectures)}more lectures to reach 75%!\
+                          No more bunking for now!`;
+                }
             } else {
-                message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil((3*totalLectures  - 4*presentLectures))} more lectures to reach 75%!\n
+                if (!required){
+                    message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                          You need to attend ${Math.ceil((totalLectures*(required/100)-presentLectures )/(required/100))} more lectures to reach 75%!\n
                           Time to become a good student!`;
+                }
+                else{
+                console.log("I am in")
+                message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                          You need to attend ${Math.ceil(3*totalLectures-4*presentLectures)} more lectures to reach 75%!\n
+                          Time to become a good student!`;}
                 className = 'danger-attendance';
                 emoji = '😱';
             }
@@ -298,6 +331,7 @@ button:hover {
             `;
             resultDiv.className = className;
             resultDiv.style.display = 'block';
+            
             updateProjectionCalendar(totalLectures, presentLectures);
         }
     </script>

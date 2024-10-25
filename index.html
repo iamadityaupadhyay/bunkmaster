@@ -301,11 +301,19 @@
                 emoji = '😎'; 
                 }
                 else{
-                if (required>75){
+                if (required>75 ){
+                    if (required<=attendancePercentage){
+                        console.log("Hello here")
+                        message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
+                           You can safely bunk ${Math.ceil((-totalLectures*(required/100)+presentLectures )/(required/100))} more lectures!\n
+                          You're crushing it! 🚀`;
+                          className = 'good-attendance';
+                    }
+                    else{
                     message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
                           You Have to attend ${Math.ceil((presentLectures-((required/100)*totalLectures))/(required/100-1))} more lectures!\n
                           You're crushing it! 🚀`;
-                          className = 'good-attendance';
+                          className = 'good-attendance';}
                 }
                 else{
                 message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n

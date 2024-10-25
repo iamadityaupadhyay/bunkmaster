@@ -333,13 +333,15 @@
                 else{
                 message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
                           You need to attend ${Math.ceil(3*totalLectures-4*presentLectures)}more lectures to reach 75%!\
-                          No more bunking for now!`;
+                          No more bunking for now!`; className = 'warning-attendance';
+                          emoji = '😰';
                 }
             } else {
                 if (!required){
                     message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
                           You need to attend ${Math.ceil((totalLectures*(required/100)-presentLectures )/(required/100))} more lectures to reach 75%!\n
                           Time to become a good student!`;
+                          
                 }
                 else{
                 console.log("I am in")

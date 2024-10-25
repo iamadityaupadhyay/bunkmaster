@@ -273,7 +273,7 @@
             const totalLectures = parseInt(document.getElementById('totalLectures').value);
             const presentLectures = parseInt(document.getElementById('presentLectures').value);
             const required = parseInt(document.getElementById('required').value);
-            classes = parseInt(document.getElementById('classes').value);
+            const classes = parseInt(document.getElementById('classes').value);
             
             if (!name || !totalLectures || !presentLectures) {
                 alert("Please fill all fields! 🙏");
@@ -310,10 +310,12 @@
                           className = 'good-attendance';
                     }
                     else{
+                        console.log("Ima in")
                     message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You Have to attend ${Math.ceil((presentLectures-((required/100)*totalLectures))/(required/100-1))} more lectures!\n
+                          You Have to attend ${-(Math.floor(((100*presentLectures)-(required*totalLectures))/(100-required)))} more lectures!\n
                           You're crushing it! 🚀`;
-                          className = 'good-attendance';}
+                          className = 'good-attendance';
+                        }
                 }
                 else{
                 message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
@@ -325,28 +327,28 @@
             } else if (attendancePercentage >= 65) {
                 if (!required){
                     message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil((totalLectures*(required/100)-presentLectures )/(required/100))}more lectures to reach 75%!\n
+                          You need to attend${Math.ceil(3*totalLectures-4*presentLectures)} more lectures to reach 75%!\n
                           No more bunking for now!`;
                 className = 'warning-attendance';
                 emoji = '😰';
                 }
                 else{
                 message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil(3*totalLectures-4*presentLectures)}more lectures to reach 75%!\
+                          You need to attend ${-(Math.floor(((100*presentLectures)-(required*totalLectures))/(100-required)))}   more lectures (Approx ${-(Math.floor((((100*presentLectures)-(required*totalLectures))/(100-required)))/classes)} days)to reach 75%!\
                           No more bunking for now!`; className = 'warning-attendance';
                           emoji = '😰';
                 }
             } else {
                 if (!required){
                     message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil((totalLectures*(required/100)-presentLectures )/(required/100))} more lectures to reach 75%!\n
+                          You need to attend ${Math.ceil(3*totalLectures-4*presentLectures)} more lectures to reach 75%!\n
                           Time to become a good student!`;
                           
                 }
                 else{
                 console.log("I am in")
                 message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil(3*totalLectures-4*presentLectures)} more lectures to reach 75%!\n
+                          You need to attend ${-(Math.ceil(((100*presentLectures)-(required*totalLectures))/(100-required)))}  more lectures (Approx ${-(Math.floor((((100*presentLectures)-(required*totalLectures))/(100-required)))/classes)} days )to reach 75%!\n
                           Time to become a good student!`;}
                 className = 'danger-attendance';
                 emoji = '😱';

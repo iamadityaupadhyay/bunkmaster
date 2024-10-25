@@ -4,156 +4,186 @@
     <title>🎒 Bunk Master Pro</title>
     <style>
         body {
-            font-family: 'Comic Sans MS', cursive;
-            background: linear-gradient(135deg, #91822b, #FF69B4);
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+    font-family: 'Comic Sans MS';
+    background: linear-gradient(135deg, #91822b, #FF69B4);
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* box-sizing: border-box; */
+}
 
-        .calculator-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            max-width: 600px;
-            width: 90%;
-        }
+.calculator-container {
+    background: white;
+    padding: 2rem;
+    font-size: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    width: 80%;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    /* padding-top: 10px;
+    padding-bottom: 10px; */
+    gap: 15px;
+    overflow-y: auto;
+    
+}
 
-        h1 {
-            text-align: center;
-            color: #FF4081;
-            margin-bottom: 30px;
-        }
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
 
-        h3 {
-            color: #FF4081;
-            text-align: center;
-            margin: 20px 0;
-        }
+    .calculator-container {
+        width: 100%;
+        margin: 0;
+        
+        border-radius: 15px;
+        padding: 1.5rem;
+    }
 
-        .input-group {
-            margin-bottom: 20px;
-        }
+    .days-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-size: 1.1em;
-        }
+h1 {
+    text-align: center;
+    color: #FF4081;
+    margin-bottom: 30px;
+}
 
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 3px solid #FFD700;
-            border-radius: 10px;
-            font-size: 1em;
-            transition: transform 0.2s;
-            box-sizing: border-box;
-        }
+h3 {
+    color: #FF4081;
+    text-align: center;
+    margin: 20px 0;
+}
 
-        input:focus {
-            outline: none;
-            transform: scale(1.02);
-        }
+.input-group {
+    margin-bottom: 20px;
+}
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #FF4081;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: transform 0.2s;
-            font-family: 'Comic Sans MS', cursive;
-        }
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 1.1em;
+}
 
-        button:hover {
-            transform: scale(1.05);
-            background: #FF1744;
-        }
+input {
+    width: 100%;
+    padding: 10px;
+    border: 3px solid #FFD700;
+    border-radius: 10px;
+    font-size: 1em;
+    transition: transform 0.2s;
+    box-sizing: border-box;
+}
 
-        #result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1.1em;
-            display: none;
-        }
+input:focus {
+    outline: none;
+    transform: scale(1.02);
+}
 
-        .good-attendance {
-            background: #E8F5E9;
-            color: #2E7D32;
-        }
+button {
+    width: 100%;
+    padding: 12px;
+    background: #FF4081;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-family: 'Comic Sans MS', cursive;
+}
 
-        .warning-attendance {
-            background: #FFF3E0;
-            color: #EF6C00;
-        }
+button:hover {
+    transform: scale(1.05);
+    background: #FF1744;
+}
 
-        .danger-attendance {
-            background: #FFEBEE;
-            color: #C62828;
-        }
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.1em;
+    display: none;
+}
 
-        .emoji {
-            font-size: 2em;
-            margin: 10px 0;
-        }
+.good-attendance {
+    background: #E8F5E9;
+    color: #2E7D32;
+}
 
-        .days-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
+.warning-attendance {
+    background: #FFF3E0;
+    color: #EF6C00;
+}
 
-        .day-card {
-            background: #E3F2FD;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 2px solid #90CAF9;
-            transition: transform 0.2s;
-        }
+.danger-attendance {
+    background: #FFEBEE;
+    color: #C62828;
+}
 
-        .day-card:hover {
-            transform: scale(1.05);
-        }
+.emoji {
+    font-size: 2em;
+    margin: 10px 0;
+}
 
-        .day-name {
-            font-weight: bold;
-            color: #1976D2;
-            font-size: 1.1em;
-            margin-bottom: 5px;
-        }
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
 
-        .day-date {
-            font-size: 0.9em;
-            color: #2196F3;
-        }
+.day-card {
+    background: #E3F2FD;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid #90CAF9;
+    transition: transform 0.2s;
+}
 
-        .projected-attendance {
-            margin-top: 15px;
-            padding: 10px;
-            background: #E8F5E9;
-            border-radius: 8px;
-            text-align: center;
-            color: #2E7D32;
-            font-weight: bold;
-        }
+.day-card:hover {
+    transform: scale(1.05);
+}
 
-        #projectionSection {
-            display: none;
-            margin-top: 30px;
-        }
+.day-name {
+    font-weight: bold;
+    color: #1976D2;
+    font-size: 0.7em;
+    margin-bottom: 5px;
+}
+
+.day-date {
+    font-size: 0.9em;
+    color: #2196F3;
+}
+
+.projected-attendance {
+    margin-top: 15px;
+    padding: 10px;
+    background: #E8F5E9;
+    border-radius: 8px;
+    text-align: center;
+    color: #2E7D32;
+    font-weight: bold;
+}
+
+#projectionSection {
+    display: none;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
     </style>
 </head>
 <body>
@@ -240,18 +270,21 @@
             if (attendancePercentage >= 75) {
                 message = `🌟 Wow ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
                           You can safely bunk ${Math.floor((totalLectures * 0.75 - presentLectures) / 0.75)} more lectures!\n
-                          You're crushing it! 🚀`;
+                          You're crushing it! 🚀
+
+                           
+                          `;
                 className = 'good-attendance';
                 emoji = '😎';
             } else if (attendancePercentage >= 65) {
                 message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil((totalLectures * 0.75 - presentLectures))} more lectures to reach 75%!\n
+                          You need to attend ${Math.ceil((3*totalLectures  - 4*presentLectures))} more lectures to reach 75%!\n
                           No more bunking for now!`;
                 className = 'warning-attendance';
                 emoji = '😰';
             } else {
                 message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${Math.ceil((totalLectures * 0.75 - presentLectures))} more lectures to reach 75%!\n
+                          You need to attend ${Math.ceil((3*totalLectures  - 4*presentLectures))} more lectures to reach 75%!\n
                           Time to become a good student!`;
                 className = 'danger-attendance';
                 emoji = '😱';
@@ -265,8 +298,6 @@
             `;
             resultDiv.className = className;
             resultDiv.style.display = 'block';
-
-            // Update projection calendar with current attendance data
             updateProjectionCalendar(totalLectures, presentLectures);
         }
     </script>

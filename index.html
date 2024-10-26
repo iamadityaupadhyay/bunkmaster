@@ -334,7 +334,7 @@
                 }
                 else{
                 message = `😅 Heads up ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${-(Math.floor(((100*presentLectures)-(required*totalLectures))/(100-required)))}   more lectures (Approx ${-(Math.floor((((100*presentLectures)-(required*totalLectures))/(100-required)))/classes)} days)to reach 75%!\
+                          You need to attend ${-(Math.floor(((100*presentLectures)-(required*totalLectures))/(100-required)))}   more lectures (Approx ${-(Math.ceil((((100*presentLectures)-(required*totalLectures))/(100-required)))/classes)} days)to reach ${required}%!\
                           No more bunking for now!`; className = 'warning-attendance';
                           emoji = '😰';
                 }
@@ -348,7 +348,7 @@
                 else{
                 console.log("I am in")
                 message = `💀 Oh no ${name}! Your attendance is ${attendancePercentage.toFixed(2)}%\n
-                          You need to attend ${-(Math.ceil(((100*presentLectures)-(required*totalLectures))/(100-required)))}  more lectures (Approx ${-(Math.floor((((100*presentLectures)-(required*totalLectures))/(100-required)))/classes)} days )to reach 75%!\n
+                          You need to attend ${-(Math.ceil(((100*presentLectures)-(required*totalLectures))/(100-required)))}  more lectures (Approx ${-(Math.floor((((100*presentLectures)-(required*totalLectures))/(100-required)))/classes)} days )to reach ${required}%!\n
                           Time to become a good student!`;}
                 className = 'danger-attendance';
                 emoji = '😱';

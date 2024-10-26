@@ -231,10 +231,34 @@
         </div>
     </div>
     <script>
+        loadUserData()
+        
+        function loadUserData() {
+            const name = localStorage.getItem('name');
+            const totalLectures = localStorage.getItem('totalLectures');
+            const presentLectures = localStorage.getItem('presentLectures');
+            const required = localStorage.getItem('required');
+            const classes = localStorage.getItem('classes');
+
+            if (name) document.getElementById('name').value = name;
+            if (totalLectures) document.getElementById('totalLectures').value = totalLectures;
+            if (presentLectures) document.getElementById('presentLectures').value = presentLectures;
+            if (required) document.getElementById('required').value = required;
+            if (classes) document.getElementById('classes').value = classes;
+        }
+
+        function saveUserData() {
+            localStorage.setItem('name', document.getElementById('name').value);
+            localStorage.setItem('totalLectures', document.getElementById('totalLectures').value);
+            localStorage.setItem('presentLectures', document.getElementById('presentLectures').value);
+            localStorage.setItem('required', document.getElementById('required').value);
+            localStorage.setItem('classes', document.getElementById('classes').value);
+        }
         function updateProjectionCalendar(totalLectures, presentLectures) {
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             const nextDaysDiv = document.getElementById('nextDays');
             const today = new Date();
+            
             let currentDate = new Date(today);
             let daysAdded = 0;
             nextDaysDiv.innerHTML = '';
@@ -362,7 +386,7 @@
             `;
             resultDiv.className = className;
             resultDiv.style.display = 'block';
-            
+            saveUserData();
             updateProjectionCalendar(totalLectures, presentLectures);
         }
     </script>
